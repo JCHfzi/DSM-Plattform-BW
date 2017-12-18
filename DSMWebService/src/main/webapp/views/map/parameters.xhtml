@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+	    
+				<p:accordionPanel multiple="true">
+					<p:tab title="Standortdaten:">
+					
+						<h:panelGrid columns="2" cellpadding="5">
+							<p:outputLabel for="companyName" value="Name der Unternehmen:" />
+							<p:inputText id="companyName" value="#{maskView.companyName}" />
+							<p:outputLabel for="companyAddress"
+								value="Adresse der Unternehmen:" />
+							<p:inputText id="companyAddress"
+								value="#{maskView.companyAddress}" />
+							<p:outputLabel for="controlZone" value="Regelzone:" />
+							<p:inputText id="controlZone" value="#{maskView.controlZone}" />
+							
+							<!--
+							<p:outputLabel for="networkLevel" value="Netzebene:" />
+							 <p:selectOneMenu id="networkLevel"
+								value="#{maskView.networkLevel}" style="width:125px">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItem itemLabel="Level One" itemValue="" />
+								<f:selectItem itemLabel="Level Two" itemValue="Xbox One" />
+								<f:selectItem itemLabel="Level Three" itemValue="PS4" />
+								<f:selectItem itemLabel="Level Four" itemValue="Wii U" />
+							</p:selectOneMenu>
+							-->
+							
+						</h:panelGrid>
+					
+					</p:tab>
+
+					<p:tab title="Verfügbarkeit">
+						<h:panelGrid columns="1" cellpadding="5">
+							<h:outputText id="displayRange1"
+								value="Verfügbare Leistung(positiv) zwischen #{sliderView.number6} und #{sliderView.number7}" />
+							<p:slider for="availablePowerPosUpper,availablePowerPosLower"
+								minValue="0" maxValue="100" step="10" display="displayRange1"
+								style="width: 400px" range="true"
+								displayTemplate="Verfügbare Leistung(positiv) zwischen {min} and {max}" />
+						</h:panelGrid>
+						<h:inputHidden id="availablePowerPosUpper"
+							value="#{sliderView.number6}" />
+						<h:inputHidden id="availablePowerPosLower"
+							value="#{sliderView.number7}" />
+						<h:panelGrid columns="1" cellpadding="5">
+							<h:outputText id="displayRange2"
+								value="Verfügbare Leistung(negativ) zwischen #{sliderView.number6} und #{sliderView.number7}" />
+							<p:slider for="availablePowerNegUpper,availablePowerNegLower"
+								minValue="0" maxValue="100" step="10" display="displayRange2"
+								style="width: 400px" range="true"
+								displayTemplate="Verfügbare Leistung(negativ) zwischen {min} and {max}" />
+						</h:panelGrid>
+						<h:inputHidden id="availablePowerNegUpper"
+							value="#{sliderView.number8}" />
+						<h:inputHidden id="availablePowerNegLower"
+							value="#{sliderView.number9}" />
+					</p:tab>
+
+					<p:tab title="Zeitrestriktionen">
+						<h:panelGrid columns="1" style="margin-bottom: 10px">
+							<h:outputText value="Minimale Rampe:" />
+							<p:inputText id="minRamp" value="#{sliderView.number5}" />
+							<p:slider for="minRamp">
+								<p:ajax event="slideEnd" listener="#{sliderView.onSlideEnd}" />
+							</p:slider>
+							<h:outputText value="Minimale Schaltdauer:" />
+							<p:inputText id="minSwitch" value="#{sliderView.number5}" />
+							<p:slider for="minSwitch">
+								<p:ajax event="slideEnd" listener="#{sliderView.onSlideEnd}" />
+							</p:slider>
+							<h:outputText value="Minimale Verschiebedauer:" />
+							<p:inputText id="minShift" value="#{sliderView.number5}" />
+							<p:slider for="minShift">
+								<p:ajax event="slideEnd" listener="#{sliderView.onSlideEnd}" />
+							</p:slider>
+							<h:outputText value="Minimale kumlierte Schaltdauer" />
+							<p:inputText id="minKumSwitch" value="#{sliderView.number5}" />
+							<p:slider for="minKumSwitch">
+								<p:ajax event="slideEnd" listener="#{sliderView.onSlideEnd}" />
+							</p:slider>
+						</h:panelGrid>
+						<!--  <p:calendar mode="inline" navigator="none" /> -->
+					</p:tab>
+				</p:accordionPanel> 
+	    </ui:composition>
+    </body>
+</html>

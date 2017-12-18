@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+	    	<ui:param name="mainID" value=":formId:mainId" />
+	    	<h:form>
+					<p:tabView id="tabsAlles" activeIndex="#{TabView.activeTab}">
+						<p:tab title="Karte" id="tabKarte"> 
+							<p:gmap id="googleMap" center="#{MapSizePosition.focus}" zoom="#{MapSizePosition.zoom}" type="HYBRID"
+									model="#{filterView.advancedModel}"
+								style="width:100%;height:600px" streetView="true">
+								<p:ajax event="stateChange" listener="#{MapSizePosition.onStateChange}" />
+								<p:ajax event="overlaySelect" listener="#{infoWindowView.onMarkerSelect}" />
+
+								<p:gmapInfoWindow id="infoWindow">
+									<p:outputPanel style="text-align: left; display: block; margin: auto">
+										<h:outputText value="#{infoWindowView.marker.title}" style="font-weight:bold" />
+										<br />
+										<br />
+			
+										<p:panelGrid columns="2">
+										
+										 
+										    <h:outputText value="Anschlussebene:" />
+										    <h:outputText value="#{infoWindowView.marker.data.voltageGroup}" />
+
+										     
+										    <h:outputText value="Regelzone:" />
+										    <h:outputText value="#{infoWindowView.marker.data.controlArea}" />
+						
+										
+										    <h:outputText value="Anschlussnetzbetreiber" />
+										    <h:outputText value="#{infoWindowView.marker.data.netOperator}" />
+								
+										    
+				
+										
+										</p:panelGrid>
+				
+										<br />					
+										<br />
+										<h:outputText value="Flexible Leistung:" />
+										<br />
+
+										<p:panelGrid columns="3">
+										
+										 
+										    <h:outputText value="Verschiebedauer:" />
+										    <h:outputText value="negativ (kW)" />
+										    <h:outputText value="positiv (kW)" />
+										     
+										    <h:outputText value="15 min" />
+										    <h:outputText value="-#{infoWindowView.marker.data.p015n}" />
+										    <h:outputText value="#{infoWindowView.marker.data.p015p}" />
+										
+										    <h:outputText value="60 min" />
+										    <h:outputText value="-#{infoWindowView.marker.data.p060n}" />
+										    <h:outputText value="#{infoWindowView.marker.data.p060p}" />
+										    
+										        <h:outputText value="240 min" />
+										    <h:outputText value="-#{infoWindowView.marker.data.p240n}" />
+										    <h:outputText value="#{infoWindowView.marker.data.p240p}" /> 
+										
+										</p:panelGrid>
+																				<br />
+										<br />
+										
+										<p:commandButton value="Details" id="details" actionListener="#{TabView.setActiveTabListe}" ajax="false" />
+										<!--  p:button value="Zeitreihen" actionListener="#{TimeseriesView.setFlexibility(infoWindowView.marker.data)}" onclick="window.open('/DSM/views/map/timeseries.xhtml');return false;" type="button" ajax="false" /--> 
+										<p:commandButton value="Zeitreihen" id="timeseries" oncomplete="window.open('/DSM/views/map/timeseries.xhtml');return false;">
+											<f:setPropertyActionListener value="#{infoWindowView.marker.data}" target="#{timeseriesView.flexibility}" />
+										</p:commandButton>  
+										<br />
+										<br/>
+										
+									</p:outputPanel>
+								</p:gmapInfoWindow>
+							</p:gmap>
+						</p:tab>
+						
+
+
+						<p:tab title="Liste" id="tabListe">
+							<p:dataTable var="flex" value="#{filterView.passendeFlexis}">
+								
+        
+								<p:column headerText=" " style="white-space:pre-line;width:20px;">
+
+									<p:commandLink oncomplete="window.open('/DSM/views/map/timeseries.xhtml');return false;">
+										<p:graphicImage id="fade0" url="/resources/images/mvn.jpg" width="30"/>
+										<p:tooltip id="toolTipFade0" for="fade0" value="Zeige Zeitreihe"  position="top"/>
+										<f:setPropertyActionListener value="#{flex}" target="#{timeseriesView.flexibility}" />
+									</p:commandLink>
+								    
+								    
+								</p:column>
+								
+								<p:column headerText="Unternehmen" style="white-space:pre-line;width:150px;">
+									
+									<h:outputLink id="fade1" value="#">
+								        <h:outputText value="#{flex.company.companyLabel}" />
+								    </h:outputLink>
+								    
+								    <p:tooltip id="toolTipFade1" for="fade1" value="#{flex.company.street} #{flex.company.houseNo}, #{flex.company.zipCode} #{flex.company.city}"  position="top"/>
+								    
+								
+								
+								</p:column>
+
+
+								<p:column headerText="Flexible Leistung (kW)" style="white-space:pre-line;width:150px;">
+									
+									<h:outputLink id="fadePower" value="#">
+								        <h:outputText value="-#{flex.p015n}  bis  #{flex.p015p}" />
+								    </h:outputLink>
+								    
+
+								    	<p:tooltip id="toolTipLnk2" for="fadePower">
+										    <h:panelGroup>
+										    			<p:panelGrid columns="3">
+
+									    <h:outputText value="Verschiebedauer:" />
+									    <h:outputText value="negativ (kW)" />
+									    <h:outputText value="positiv (kW)" />
+									   	
+									   	   <h:outputText value="15 min" />
+									    <h:outputText value="-#{flex.p015n}" />
+									    <h:outputText value="#{flex.p015p}" />
+									
+									    <h:outputText value="60 min" />
+									    <h:outputText value="-#{flex.p060n}" />
+									    <h:outputText value="#{flex.p060p}" />
+									    
+									        <h:outputText value="240 min" />
+									    <h:outputText value="-#{flex.p240n}" />
+									    <h:outputText value="#{flex.p240p}" /> 
+    
+									</p:panelGrid>
+											  </h:panelGroup>
+										</p:tooltip>
+								</p:column>
+
+								<p:column headerText="Rampe (kW/min)" style="white-space:pre-line;width:100px;">
+									<h:outputText value="#{flex.rampe}" />
+								</p:column>
+																<p:column headerText="Teilbarkeit" style="white-space:pre-line;width:100px;">
+									<h:outputText value="#{flex.teilbarkeit}" />
+								</p:column>
+								
+								<p:column headerText="Aktivierungs-Dauer (min)" style="white-space:pre-line;width:100px;">
+									<h:outputText value="#{flex.aktivierungsDauer}" />
+								</p:column>
+								
+								<p:column headerText="weitere Parameter" style="white-space:pre-line;width:150px;">
+									
+									<h:outputLink id="fade3" value="#">
+								        <h:outputText value="Optionale Parameter" />
+								    </h:outputLink>
+								    
+
+								    	<p:tooltip id="toolTipLnk" for="fade3">
+										
+										<p:panelGrid columns="2">
+										
+										 
+										    <h:outputText value="Wie viel Prozent des Jahres ist diese Umverteilung verfügbar:" />
+										    <h:outputText value="#{flex.verfuegbarkeit}%" />
+
+										     
+										    <h:outputText value="Wie oft diese Umverteilung aktivierbar ist innerhalb eines Jahres" />
+										    <h:outputText value="#{flex.aktivierungen}" />
+
+										    <h:outputText value="Zeitpunkt t, zu dem die verschobene Energiemenge nachgeholt sein muss:" />
+										    <h:outputText value="#{flex.verschiebeZeitpunkt}" />
+
+										    
+										    <h:outputText value="Verschiebbare Energiemenge:" />
+										    <h:outputText value="#{flex.verschiebeEnergie} kWh" />
+
+										    <h:outputText value="Zeitraum, in der die Änderung der Bezugsleistung erfolgt:" />
+										    <h:outputText value="#{flex.schaltDauer} min" />
+										    
+										    <h:outputText value="Verschiebedauer; Zeitraum, in dem die Verschiebung der Bezugsleistung nachgeholt wurde:" />
+										    <h:outputText value="#{flex.verschiebeDauer} min" />
+										
+										</p:panelGrid>
+										
+										</p:tooltip>
+								</p:column>
+															<p:column headerText="Ansprechpartner" style="white-space:pre-line;width:150px;">
+									
+									
+									<h:outputLink id="fade2" value="#">
+								        <h:outputText value="#{flex.company.forename} #{flex.company.sirname}" />
+								    </h:outputLink>
+								    
+										<p:tooltip id="toolTipFade2" for="fade2">
+										 				<p:panelGrid columns="2">
+										
+										 
+										    <h:outputText value="E-Mail:" />
+										    <h:outputText value="#{flex.company.eMailAddress}" />
+	 										<h:outputText value="Telefon:" />
+										    <h:outputText value="#{flex.company.phoneNumber}" />
+										
+										
+										</p:panelGrid>
+								    	
+								    	</p:tooltip>
+							
+								</p:column>									
+							</p:dataTable>
+
+			<p:dataTable id="HiddenTable" var="flex" value="#{filterView.passendeFlexis}" rendered="false" >
+
+	<p:column headerText="companyLabel">
+					<h:outputText value="#{flex.company.companyLabel}" />
+				</p:column>
+				<p:column headerText="industry">
+					<h:outputText value="#{flex.company.industry}" />
+				</p:column>
+				<p:column headerText="street">
+					<h:outputText value="#{flex.company.street}" />
+				</p:column>
+				<p:column headerText="houseNo">
+					<h:outputText value="#{flex.company.houseNo}" />
+				</p:column>				
+				<p:column headerText="zipCode">
+					<h:outputText value="#{flex.company.zipCode}" />
+				</p:column>
+				<p:column headerText="city">
+					<h:outputText value="#{flex.company.city}" />
+				</p:column>
+				<p:column headerText="longitude">
+					<h:outputText value="#{flex.company.longitude}" />
+				</p:column>
+				<p:column headerText="latitude">
+					<h:outputText value="#{flex.company.latitude}" />
+				</p:column>		
+				<p:column headerText="forename">
+					<h:outputText value="#{flex.company.forename}" />
+				</p:column>
+				<p:column headerText="sirname">
+					<h:outputText value="#{flex.company.sirname}" />
+				</p:column>
+				<p:column headerText="eMail">
+					<h:outputText value="#{flex.company.eMailAddress}" />
+				</p:column>
+				<p:column headerText="phone">
+					<h:outputText value="#{flex.company.phoneNumber}" />
+				</p:column>				
+				<p:column headerText="p015p">
+					<h:outputText value="#{flex.p015p}" />
+				</p:column>
+				<p:column headerText="P015N">
+					<h:outputText value="#{flex.p015n}" />
+				</p:column>
+				<p:column headerText="p060p">
+					<h:outputText value="#{flex.p060p}" />
+				</p:column>
+				<p:column headerText="p060n">
+					<h:outputText value="#{flex.p060n}" />
+				</p:column>	
+				<p:column headerText="p240n">
+					<h:outputText value="#{flex.p240n}" />
+				</p:column>
+				<p:column headerText="activationDuration">
+					<h:outputText value="#{flex.activationDuration}" />
+				</p:column>
+				<p:column headerText="posLeistung">
+					<h:outputText value="#{flex.posLeistung}" />
+				</p:column>
+				<p:column headerText="negLeistung">
+					<h:outputText value="#{flex.negLeistung}" />
+				</p:column>	
+				<p:column headerText="rampe">
+					<h:outputText value="#{flex.rampe}" />
+				</p:column>
+				<p:column headerText="teilbarkeit">
+					<h:outputText value="#{flex.teilbarkeit}" />
+				</p:column>
+				<p:column headerText="aktivierungsDauer">
+					<h:outputText value="#{flex.aktivierungsDauer}" />
+				</p:column>
+				<p:column headerText="verfuegbarkeit">
+					<h:outputText value="#{flex.verfuegbarkeit}" />
+				</p:column>	
+				<p:column headerText="aktivierungen">
+					<h:outputText value="#{flex.aktivierungen}" />
+				</p:column>
+				<p:column headerText="verschiebeZeitpunkt">
+					<h:outputText value="#{flex.verschiebeZeitpunkt}" />
+				</p:column>
+				<p:column headerText="verschiebeEnergie">
+					<h:outputText value="#{flex.verschiebeEnergie}" />
+				</p:column>
+				<p:column headerText="schaltDauer">
+					<h:outputText value="#{flex.schaltDauer}" />
+				</p:column>	
+				<p:column headerText="verschiebeDauer">
+					<h:outputText value="#{flex.verschiebeDauer}" />
+				</p:column>
+				<p:column headerText="voltageGroup">
+					<h:outputText value="#{flex.voltageGroup}" />
+				</p:column>
+				<p:column headerText="controlArea">
+					<h:outputText value="#{flex.controlArea}" />
+				</p:column>
+				<p:column headerText="netOperator">
+					<h:outputText value="#{flex.netOperator}" />
+				</p:column>	
+			</p:dataTable>
+
+    <h:commandLink>
+    	<br />
+    	<p:commandButton value="Lade Trefferliste als CSV-Datei herunter" id="download" ajax="false" />
+        <p:dataExporter type="csv" target="HiddenTable" fileName="filteredFlex" pageOnly="false" />
+    </h:commandLink>
+ 
+
+						</p:tab>
+						
+						<p:tab title="Fahrplan" id="tabFahrplan">
+							<h:outputText value="Anhand der Eingaben wurde ein Fahrplan basierend auf den vorhandenen Flexibilitätsoptionen erstellt:" /><br/>
+
+							<p:graphicImage url="#{FahrplanView.fahrplanBildPfad}"  width="800"/>
+	
+						
+
+						</p:tab>
+					</p:tabView>
+				
+			</h:form>
+        </ui:composition>
+
+	<script type="text/javascript">    
+	function popupwindow(url, title) {      
+	    window.open(url , title, "toolbar=no, scrollbars=yes, resizable=yes, top=170, left=170, width=800, height=600");        
+	}    
+	</script>
+    
+    </body>
+</html>

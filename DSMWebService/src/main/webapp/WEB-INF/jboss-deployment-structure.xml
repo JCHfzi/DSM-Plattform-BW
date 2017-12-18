@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<jboss-deployment-structure>
+  <ear-subdeployments-isolated>false</ear-subdeployments-isolated>
+  <deployment>
+    <exclusions>
+    </exclusions>
+    <dependencies>
+      <module name="displaytag" />
+      <module name="com.eclipsesource.minimal-json" slot="0.9.4" />
+      <module name="org.dom4j" />
+      <module name="org.apache.axis" slot="1.4" />
+      <module name="org.apache.struts" />
+      <module name="org.apache.commons.beanutils" />
+      <module name="org.apache.commons.collections" />
+      <module name="org.apache.commons.configuration" />
+      <module name="org.apache.commons.codec" />
+      <module name="org.apache.commons.digester3" />
+      <module name="org.apache.commons.el" />
+      <module name="org.apache.commons.io" slot="2.1" />
+      <module name="org.apache.commons.lang3" />
+      <module name="org.apache.commons.logging" />
+      <module name="org.apache.commons.net" />
+      <module name="org.apache.commons.validator" />
+      <module name="org.apache.log4j" />
+      <module name="org.apache.velocity" />
+      <module name="org.apache.poi" />
+      <module name="org.apache.xalan" />
+      <module name="org.apache.xerces" />
+      <module name="org.codehaus.groovy.groovy-all" />
+      <module name="org.hibernate" slot="3.6" />
+      <module name="org.javassist" />
+      <module name="org.quartz-scheduler" />
+      <module name="aopalliance.aopalliance"/>
+      <module name="javax.el.api" slot="main"/>
+      <module name="org.springframework.spring">
+        <imports>
+          <include path="META-INF**" />
+          <include path="org**" />
+          <include path="**" />
+        </imports>
+      </module>
+      <module name="log4j" />
+      <module name="xml-apis" />
+      <module name="org.jacorb" slot="3.5" />
+    </dependencies>
+    <resources>
+    </resources>
+  </deployment>
+</jboss-deployment-structure>

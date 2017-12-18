@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    <body>
+   
+    	 <ui:composition>
+	        <p:dataList value="#{filterView.passendeFlexis}" var="flex" type="ordered">
+        <f:facet name="header">
+            Treffer
+        </f:facet>
+			
+			<h:form>
+			<b> <p:commandLink  value="#{flex.company.companyLabel}, #{flex.company.city}  " id="details" actionListener="#{TabView.setActiveTabListe}" ajax="false" /> </b>
+     		<br/> Flexible Leistung von: <br/> 
+     		-#{flex.p015n}  bis  #{flex.p015p}  kW <br/>
+     		<br/>
+     		
+	    	</h:form>
+	 </p:dataList>
+    </ui:composition>
+     
+    </body>
+</html>

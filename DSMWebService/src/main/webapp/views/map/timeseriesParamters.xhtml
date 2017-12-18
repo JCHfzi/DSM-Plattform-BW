@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+    		<p:accordionPanel multiple="true">
+				<p:tab title="Zeitreihen">
+					
+					<h:form>
+						<h:panelGrid columns="2" cellpadding="5">
+	    					<p:commandButton value="Aktualisieren" id="reload" action="#{timeseriesView.reload()}" update="@([id$=#j_idt24_content" />
+						</h:panelGrid>
+						<h:panelGrid columns="2" cellpadding="5" id="PeriodInputs">
+        					<p:outputLabel for="startDate" value="Zeitraum von:" />
+        					<p:calendar id="startDate" value="#{timeseriesView.start}" pattern="MM/dd/yyyy HH:mm:ss" />
+							
+							<p:outputLabel for="endDate" value="Zeitraum bis:" />
+        					<p:calendar id="endDate" value="#{timeseriesView.end}" pattern="MM/dd/yyyy HH:mm:ss" />
+						</h:panelGrid>
+					</h:form>
+					</p:tab>
+				</p:accordionPanel> 
+	    </ui:composition>
+    </body>
+</html>

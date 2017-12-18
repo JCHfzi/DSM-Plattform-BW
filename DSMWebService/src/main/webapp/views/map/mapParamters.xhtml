@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+	    				<p:accordionPanel multiple="true">
+					<p:tab title="Flexibilitätssuche">
+						
+						<h:form>
+						
+					
+						<h:panelGrid columns="2" cellpadding="5" id="KartenInputs">
+	    					<p:commandButton value="Suche" style="width:160px" id="erstellen" action="#{filterView.buttonAction()}" actionlistener="#{TabView.setActiveTabKarte}"  update="KartenInputs KartenInputs2  KartenInputs4  @([id$=#j_idt68:tabsAlles:tabKarte:googleMap @([id$=#j_idt68:tabsAlles:Liste] @([id$=#j_idt68:tabsAlles:j_idt155" />
+	    					
+	    					<p:commandButton value="Suche Zurücksetzen" style="width:160px" id="zurueck" action="#{filterView.buttonActionReset()}" actionlistener="#{TabView.setActiveTabKarte}" update="KartenInputs KartenInputs2  KartenInputs4 @([id$=#j_idt68:tabsAlles:tabKarte:googleMap @([id$=#j_idt68:tabsAlles:Liste] @([id$=#j_idt68:tabsAlles:j_idt155" />
+				
+
+				
+							<p:outputLabel for="companyName" value="Name des Unternehmens:" style="width:150px"/>
+							<p:inputText id="companyName" value="#{filterView.compName}" style="width:150px"/>
+							
+							<p:outputLabel for="companyAddress"
+								value="Adresse des Unternehmens:" style="width:150px"/>
+								
+							<p:inputText id="companyAddress"
+								value="#{filterView.compAdresse}" style="width:150px"/>
+								
+		
+							
+											
+							<p:outputLabel for="controlZone" value="Regelzone:" style="width:150px"/>
+							
+							 <p:selectOneMenu id="controlZone"
+								value="#{filterView.regelzone}" style="width:135px">
+								<f:selectItem itemLabel="beliebig" itemValue="" />
+								<f:selectItem itemLabel="TransnetBW" itemValue="TransnetBW" />
+								<f:selectItem itemLabel="Tennet" itemValue="Tennet" />
+								<f:selectItem itemLabel="Amprion" itemValue="Amprion" />
+								<f:selectItem itemLabel="50Hertz" itemValue="50Herz" />
+
+							</p:selectOneMenu>
+							
+							</h:panelGrid>
+		
+							
+				
+					
+
+						<h:panelGrid columns="1" cellpadding="5" id="KartenInputs2">
+							<h:outputText id="displayRange1" style="width:150px"
+								value="Flexible Leistung (positiv) zwischen #{filterView.posMinLeistung} und #{filterView.posMaxLeistung} kW" />
+							<p:slider for="availablePowerPosLower,availablePowerPosUpper" 
+								minValue="0" maxValue="10000" step="500" display="displayRange1"
+								style="width: 145px" range="true"
+								displayTemplate="Flexible Leistung (positiv) zwischen {min} und {max} kW" />
+						
+						
+						<h:inputHidden id="availablePowerPosLower"
+							value="#{filterView.posMinLeistung}" />
+						<h:inputHidden id="availablePowerPosUpper"
+							value="#{filterView.posMaxLeistung}" />
+						
+
+							<h:outputText id="displayRange2" style="width:150px"
+								value="Flexible Leistung (negativ) zwischen #{filterView.negMinLeistung} und #{filterView.negMaxLeistung} kW" />
+
+							
+							<p:slider for="availablePowerNegLower,availablePowerNegUpper"
+								minValue="0" maxValue="10000" step="500" display="displayRange2"
+								style="width: 145px" range="true"
+								displayTemplate="Flexible Leistung (negativ) zwischen {min} und {max} kW" />
+						</h:panelGrid>
+						
+						<h:inputHidden id="availablePowerNegLower"
+							value="#{filterView.negMinLeistung}" />
+						<h:inputHidden id="availablePowerNegUpper"
+							value="#{filterView.negMaxLeistung}" />
+				
+						
+						<h:panelGrid columns="1" style="margin-bottom: 10px" id="KartenInputs4">
+							<h:outputText value="Minimale Rampe (kW/min):" style="width: 60px"/>
+							<p:inputText id="minRamp" value="#{filterView.minRampe}" style="width: 40px"/>
+							<p:slider for="minRamp" minValue="0" maxValue="5000" step="100" style="width: 150px" >   
+												</p:slider>
+		
+						
+							
+							<h:outputText value="Maximale Aktivierdauer (min):" />
+							<p:inputText id="minShift" value="#{filterView.maxAktivierungsdauer}" style="width: 40px"/>
+							<p:slider for="minShift" minValue="0" maxValue="240" step="10" style="width: 150px">
+							</p:slider>
+							
+
+
+						</h:panelGrid>
+						
+						
+						<!--  <p:calendar mode="inline" navigator="none" /> -->
+					</h:form>
+					</p:tab>
+				</p:accordionPanel> 
+	    </ui:composition>
+    </body>
+</html>

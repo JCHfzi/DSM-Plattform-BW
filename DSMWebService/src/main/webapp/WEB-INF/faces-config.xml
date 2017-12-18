@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+	<application>
+		<!-- <variable-resolver>org.springframework.web.jsf.DelegatingVariableResolver</variable-resolver> -->
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+	</application>
+
+<!-- 
+	<managed-bean>
+	    <managed-bean-name>mapService</managed-bean-name>
+	    <managed-bean-class>de.dsm.client.service.MapService</managed-bean-class>
+	    <managed-bean-scope>view</managed-bean-scope>
+	    <managed-property>
+	        <property-name>mapService</property-name>
+	        <value>#{mapService}</value>
+	    </managed-property>
+	</managed-bean>
+ -->
+</faces-config>
